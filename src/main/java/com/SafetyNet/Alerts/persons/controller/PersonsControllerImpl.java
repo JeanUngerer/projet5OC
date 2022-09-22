@@ -1,5 +1,8 @@
 package com.SafetyNet.Alerts.persons.controller;
 
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,5 +21,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("${spring.data.rest.base-path}")
 public class PersonsControllerImpl {
+	
+	
+	private static final Logger LOGGER =  LogManager.getLogger(PersonsControllerImpl.class);
+	
+	public static void main() {
+		LOGGER.info("APPEL");
+	}
+	
+	@GetMapping("/units")
+	public void getUnitsById() {
+		LOGGER.info("APPEL");
+		
+	}
 
 }
