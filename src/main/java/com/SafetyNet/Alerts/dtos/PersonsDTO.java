@@ -1,12 +1,14 @@
-package com.SafetyNet.Alerts.persons.service.domain;
+package com.SafetyNet.Alerts.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.ZonedDateTime;
+import java.util.List;
+
 @Getter
 @Setter
-public class Persons {
-    private Long id;
+public class PersonsDTO {
 
     private String firstName;
 

@@ -29,7 +29,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("${spring.data.rest.base-path}")
-public class MedicalRecordsControllerImpl {
+public class MedicalRecordsControllerImpl implements MedicalRecordsController {
 
 	@Autowired
 	private MedicalRecordsService medicalRecordsService;
@@ -84,8 +84,8 @@ public class MedicalRecordsControllerImpl {
 		return ResponseEntity.ok().body(modelMapper.map(record, MedicalRecordsDTO.class));
 	}
 
-	@DeleteMapping("/unit/{id}")
-	public ResponseEntity<String> deleteUnits(@PathVariable Long id) {
+	@DeleteMapping("/medicalrecords/{id}")
+	public ResponseEntity<String> deleteMedicalRecords(@PathVariable Long id) {
 		MedicalRecords removed = medicalRecordsService.deleteMedicalRecord(id);
 		return new ResponseEntity<>("The medical record from " + removed.getFirstName() + " " + removed.getLastName() +  " has been deleted", HttpStatus.OK);
 	}
