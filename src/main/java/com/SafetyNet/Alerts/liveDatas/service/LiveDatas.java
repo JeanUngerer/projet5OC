@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import com.SafetyNet.Alerts.persons.service.domain.Persons;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,6 +25,10 @@ public class LiveDatas {
 
     private static Map<Long, MedicalRecords> medicalRecords;
     private static Long medicalRecordsIndex;
+
+    private static Map<Long, Persons> persons;
+
+    private static Long personsIndex;
 
     public LiveDatas(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
@@ -71,5 +76,32 @@ public class LiveDatas {
 
     public void setMedicalRecordsIndex(Long index){
         this.medicalRecordsIndex = index;
+    }
+
+
+    public Map<Long, Persons> getAllPersons() {
+        return this.persons;
+    }
+
+    public Persons getPersonById(Long id){
+        return this.persons.get(id);
+    }
+
+    public void putPerson(Long id, Persons record){
+        this.persons.put(id, record);
+    }
+
+    public void removePerson(Long id){
+        this.persons.remove(id);
+    }
+
+
+
+    public Long getPersonsIndex(){
+        return this.personsIndex;
+    }
+
+    public void setPersonsIndex(Long index){
+        this.personsIndex = index;
     }
 }
