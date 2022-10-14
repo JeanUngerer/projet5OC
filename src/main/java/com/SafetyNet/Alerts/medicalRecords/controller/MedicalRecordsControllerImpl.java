@@ -36,11 +36,6 @@ public class MedicalRecordsControllerImpl implements MedicalRecordsController {
 
 	private ModelMapper modelMapper;
 
-	
-	public static void main() {
-		log.info("APPEL");
-	}
-
 
 	@GetMapping("/medicalrecords/{id}")
 	public ResponseEntity<MedicalRecordsDTO> getMedicalRecordsById(@PathVariable Long id) throws Exception {

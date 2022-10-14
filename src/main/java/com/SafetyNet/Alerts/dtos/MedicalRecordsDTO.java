@@ -10,6 +10,8 @@ import java.util.List;
 @Setter
 public class MedicalRecordsDTO {
 
+    private long id;
+
     private String firstName;
 
     private String lastName;

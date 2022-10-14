@@ -41,11 +41,6 @@ public class PersonsControllerImpl implements PersonsController {
 	private ModelMapper modelMapper;
 
 
-	public static void main() {
-		log.info("APPEL");
-	}
-
-
 	@GetMapping("/persons/{id}")
 	public ResponseEntity<PersonsDTO> getPersonsById(@PathVariable Long id) throws Exception {
 		Persons record = personsService.getPersonById(id);

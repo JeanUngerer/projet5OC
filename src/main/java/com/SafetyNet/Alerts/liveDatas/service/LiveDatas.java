@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import com.SafetyNet.Alerts.firestations.service.domain.Firestations;
 import com.SafetyNet.Alerts.persons.service.domain.Persons;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -11,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import com.SafetyNet.Alerts.medicalRecords.service.domain.MedicalRecords;
@@ -30,9 +32,15 @@ public class LiveDatas {
 
     private static Long personsIndex;
 
+    private static Map<Long, Firestations> firestations;
+
+    private static Long firestationsIndex;
+
     public LiveDatas(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
         this.medicalRecordsIndex = Long.valueOf(0);
+        this.personsIndex = Long.valueOf(0);
+        this.firestationsIndex = Long.valueOf(0);
     }
 
     public void getInitialDatas() {
@@ -40,7 +48,6 @@ public class LiveDatas {
         String dataJSON = this.restTemplate.getForObject(url, String.class);
         ObjectMapper mapper = new ObjectMapper();
         log.info("FETCHED INITIAL DATAS : " + dataJSON);
-
         try {
             JsonNode actualObj = mapper.readTree(dataJSON);
             JsonNode medRecordsNode = actualObj.get("medicalRecords");
@@ -103,5 +110,32 @@ public class LiveDatas {
 
     public void setPersonsIndex(Long index){
         this.personsIndex = index;
+    }
+
+
+    public Map<Long, Firestations> getAllFirestations() {
+        return this.firestations;
+    }
+
+    public Firestations getFirestationById(Long id){
+        return this.firestations.get(id);
+    }
+
+    public void putFirestation(Long id, Firestations record){
+        this.firestations.put(id, record);
+    }
+
+    public void removeFirestation(Long id){
+        this.firestations.remove(id);
+    }
+
+
+
+    public Long getFirestationsIndex(){
+        return this.firestationsIndex;
+    }
+
+    public void setFirestationsIndex(Long index){
+        this.firestationsIndex = index;
     }
 }

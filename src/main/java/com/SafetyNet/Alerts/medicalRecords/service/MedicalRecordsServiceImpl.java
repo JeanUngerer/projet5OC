@@ -30,7 +30,7 @@ public class MedicalRecordsServiceImpl implements MedicalRecordsService {
 	
 	@Override
 	public List<MedicalRecords> getAllMedicalRecords() {
-		return new ArrayList<MedicalRecords>(liveDatas.getAllMedicalRecords().values());
+		return new ArrayList<>(liveDatas.getAllMedicalRecords().values());
 	}
 	
 
