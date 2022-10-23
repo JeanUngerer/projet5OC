@@ -27,7 +27,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vaadin.external.google</groupId>
+                    <artifactId>android-json</artifactId>
+                </exclusion>
+            </exclusions>
 		</dependency>
 		
 		<dependency>
@@ -41,8 +47,15 @@
             <version>1.5.2.Final</version>
         </dependency-->
 
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20220320</version>
+        </dependency>
 
-	    <dependency>
+
+
+        <dependency>
 	    	<groupId>org.modelmapper</groupId>
 	    	<artifactId>modelmapper</artifactId>
 	    	<version>3.0.0</version>
@@ -67,6 +80,8 @@
 		    <version>0.9.19</version>
 		</dependency>
 	</dependencies>
+
+
 	
 	
     <reporting>

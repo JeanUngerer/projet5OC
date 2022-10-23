@@ -32,7 +32,7 @@ public class FirestationsControllerImpl {
     @Autowired
     private FirestationsService firestationsService;
 
-    private ModelMapper modelMapper;
+    private ModelMapper modelMapper = new ModelMapper();
 
 
     @GetMapping("/firestations/{id}")
@@ -51,7 +51,6 @@ public class FirestationsControllerImpl {
     }
 
     @PostMapping(path = "/firestations", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<FirestationsDTO> createFirestations(@RequestBody FirestationsDTO dto) {
         Firestations record = firestationsService.createFirestation(
                 modelMapper.map(dto, Firestations.class)
@@ -61,7 +60,6 @@ public class FirestationsControllerImpl {
     }
 
     @PutMapping(path = "/firestations/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<PersonsDTO> updateFirestations(@RequestBody PersonsDTO dto) {
         Firestations record = firestationsService.updateFirestation(
                 modelMapper.map(dto, Firestations.class)

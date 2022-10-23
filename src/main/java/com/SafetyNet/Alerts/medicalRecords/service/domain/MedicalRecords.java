@@ -21,5 +21,7 @@ public class MedicalRecords {
 	private ZonedDateTime birthdate;
 	
 	private List<String> medications;
+
+	private List<String> allergies;
 	
 }

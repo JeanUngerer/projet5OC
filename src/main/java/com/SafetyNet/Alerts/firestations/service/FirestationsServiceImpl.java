@@ -43,7 +43,7 @@ public class FirestationsServiceImpl implements FirestationsService{
         Long index = liveDatas.getFirestationsIndex() + 1;
 
         liveDatas.setFirestationsIndex(index);
-
+        firestation.setId(index);
         liveDatas.putFirestation(index, firestation);
         return firestation;
 

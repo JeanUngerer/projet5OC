@@ -1,17 +1,11 @@
 package com.SafetyNet.Alerts.persons.controller;
 
 
-import com.SafetyNet.Alerts.dtos.MedicalRecordsDTO;
 import com.SafetyNet.Alerts.dtos.PersonsDTO;
-import com.SafetyNet.Alerts.medicalRecords.service.MedicalRecordsService;
-import com.SafetyNet.Alerts.medicalRecords.service.domain.MedicalRecords;
 import com.SafetyNet.Alerts.persons.service.PersonsService;
 import com.SafetyNet.Alerts.persons.service.domain.Persons;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -38,7 +32,7 @@ public class PersonsControllerImpl implements PersonsController {
 	@Autowired
 	private PersonsService personsService;
 
-	private ModelMapper modelMapper;
+	private static final ModelMapper modelMapper = new ModelMapper();
 
 
 	@GetMapping("/persons/{id}")
@@ -57,31 +51,18 @@ public class PersonsControllerImpl implements PersonsController {
 	}
 
 	@PostMapping(path = "/persons", consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<PersonsDTO> createPersons(@RequestBody PersonsDTO dto) {
 		Persons record = personsService.createPerson(
-				dto.getFirstName(),
-				dto.getLastName(),
-				dto.getAddress(),
-				dto.getCity(),
-				dto.getPhone(),
-				dto.getEmail()
+				modelMapper.map(dto, Persons.class)
 		);
 
 		return ResponseEntity.ok().body(modelMapper.map(record, PersonsDTO.class));
 	}
 
 	@PutMapping(path = "/persons/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public ResponseEntity<PersonsDTO> updatePersons(@PathVariable Long id, @RequestBody PersonsDTO dto) {
+	public ResponseEntity<PersonsDTO> updatePersons(@RequestBody PersonsDTO dto) {
 		Persons record = personsService.updatePerson(
-				id,
-				dto.getFirstName(),
-				dto.getLastName(),
-				dto.getAddress(),
-				dto.getCity(),
-				dto.getPhone(),
-				dto.getEmail()
+				modelMapper.map(dto, Persons.class)
 		);
 
 		return ResponseEntity.ok().body(modelMapper.map(record, PersonsDTO.class));

@@ -10,11 +10,12 @@ public interface MedicalRecordsService {
 	
 	public MedicalRecords getMedicalRecordsById(long id) throws Exception;
 
+	public MedicalRecords getMedicalRecordByName(String firstName, String lastName);
 	public List<MedicalRecords> getAllMedicalRecords() throws Exception;
 
-	public MedicalRecords createMedicalRecords(String firstName, String lastName, ZonedDateTime birthdate, List<String> medications);
+	public MedicalRecords createMedicalRecords(MedicalRecords record);
 
-	public MedicalRecords updateMedicalRecords(Long id, String firstName, String lastName, ZonedDateTime birthdate, List<String> medications);
+	public MedicalRecords updateMedicalRecords(MedicalRecords updatedMedicalRecord);
 
 	public MedicalRecords deleteMedicalRecord(Long id);
 

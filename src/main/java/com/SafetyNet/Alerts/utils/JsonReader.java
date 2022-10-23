@@ -1,9 +1,12 @@
 package com.SafetyNet.Alerts.utils;
 
 
+import com.SafetyNet.Alerts.constants.DataUrls;
+import com.SafetyNet.Alerts.persons.service.domain.Persons;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.modelmapper.ModelMapper;
 
 import java.io.BufferedReader;
         import java.io.IOException;
@@ -18,6 +21,8 @@ import java.util.stream.Collectors;
 
 
 public class JsonReader {
+
+    private static ModelMapper modelMapper = new ModelMapper();
 
     private static final String URL = "https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/DA+Java+EN/P5+/data.json";
 
@@ -43,9 +48,9 @@ public class JsonReader {
     }
 
     public static void main(String[] args) throws IOException, JSONException {
-        JSONObject json = readJsonFromUrl(URL);
-        System.out.println(json.toString());
-        System.out.println(json.get("persons"));
+        JSONObject json = readJsonFromUrl(DataUrls.INITIAL_URL);
+        //System.out.println(json.toString());
+        //System.out.println(json.get("persons"));
         JSONArray jsonArray = json.getJSONArray("persons");
         jsonArray.length(); // see stream and lambda functions ->
         System.out.println(jsonArray.get(0));
@@ -60,7 +65,12 @@ public class JsonReader {
 
         ArrayList<Object> array = new ArrayList<>();
         jsonArray.forEach(array::add);
+        System.out.println(jsonArray);
         //array.stream().map(var -> var.toString()).forEach();
+
+        System.out.println("========================================================");
+        System.out.println("========================================================");
+        jsonArray.forEach(jsonElem -> System.out.println(modelMapper.map(jsonElem, Persons.class)));
 
     }
 

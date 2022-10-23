@@ -19,4 +19,6 @@ public class MedicalRecordsDTO {
     private ZonedDateTime birthdate;
 
     private List<String> medications;
+
+    private List<String> allergies;
 }

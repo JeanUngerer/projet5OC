@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PersonsServiceImpl implements PersonsService {
@@ -25,6 +26,13 @@ public class PersonsServiceImpl implements PersonsService {
         return liveDatas.getPersonById(id);
     }
 
+    public Persons getPersonByName(String firstName, String lastName)
+    {
+        List<Persons> allPersons = new ArrayList<Persons>(liveDatas.getAllPersons().values());
+
+        return getNameFilteredList(allPersons, firstName, lastName);
+    }
+
     @Override
     public List<Persons> getAllPersons() {
         return new ArrayList<Persons>(liveDatas.getAllPersons().values());
@@ -40,34 +48,26 @@ public class PersonsServiceImpl implements PersonsService {
     }
 
     @Override
-    public Persons createPerson(String firstName, String lastName, String address, String city, String phone, String email) {
+    public Persons createPerson(Persons person) {
         Long index = liveDatas.getPersonsIndex() + 1;
-        Persons person = new Persons();
-        person.setId(index);
-        person.setAddress(address);
-        person.setFirstName(firstName);
-        person.setLastName(lastName);
-        person.setPhone(phone);
-        person.setCity(city);
-        person.setEmail(email);
         liveDatas.setPersonsIndex(index);
-
+        person.setId(index);
         liveDatas.putPerson(index, person);
         return person;
 
     }
 
     @Override
-    public Persons updatePerson(Long id, String firstName, String lastName, String address, String city, String phone, String email) {
-        Persons updatedPerson = liveDatas.getPersonById(id);
-        updatedPerson.setAddress(address);
-        updatedPerson.setFirstName(firstName);
-        updatedPerson.setLastName(lastName);
-        updatedPerson.setPhone(phone);
-        updatedPerson.setCity(city);
-        updatedPerson.setEmail(email);
-
-        liveDatas.putPerson(id, updatedPerson);
+    public Persons updatePerson(Persons updatePerson) {
+        Persons updatedPerson = liveDatas.getPersonById(updatePerson.getId());
+        liveDatas.putPerson(updatePerson.getId(), updatedPerson);
         return updatedPerson;
     }
+
+
+    private Persons getNameFilteredList(List<Persons> entryList, String firstName, String lastName) {
+        return entryList.stream().filter(f -> firstName.compareTo(f.getFirstName()) > 0).filter(f -> lastName.compareTo(f.getLastName()) > 0).collect(Collectors.toList()).get(0);
+    }
+
+
 }

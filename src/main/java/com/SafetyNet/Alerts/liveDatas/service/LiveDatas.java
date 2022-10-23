@@ -1,62 +1,47 @@
 package com.SafetyNet.Alerts.liveDatas.service;
 
-import java.io.IOException;
-import java.util.List;
+
+import java.util.HashMap;
 import java.util.Map;
 
 import com.SafetyNet.Alerts.firestations.service.domain.Firestations;
+
 import com.SafetyNet.Alerts.persons.service.domain.Persons;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.jackson.JsonObjectDeserializer;
+
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import com.SafetyNet.Alerts.medicalRecords.service.domain.MedicalRecords;
-import org.springframework.web.client.RestTemplate;
+
 
 @Getter
 @Setter
 @Service
 @Slf4j
 public class LiveDatas {
-    private final RestTemplate restTemplate;
 
-    private static Map<Long, MedicalRecords> medicalRecords;
-    private static Long medicalRecordsIndex;
+    private Map<Long, MedicalRecords> medicalRecords;
+    private Long medicalRecordsIndex;
 
-    private static Map<Long, Persons> persons;
+    private Map<Long, Persons> persons;
 
-    private static Long personsIndex;
+    private Long personsIndex;
 
-    private static Map<Long, Firestations> firestations;
+    private Map<Long, Firestations> firestations;
 
-    private static Long firestationsIndex;
+    private Long firestationsIndex;
 
-    public LiveDatas(RestTemplateBuilder restTemplateBuilder) {
-        this.restTemplate = restTemplateBuilder.build();
-        this.medicalRecordsIndex = Long.valueOf(0);
-        this.personsIndex = Long.valueOf(0);
-        this.firestationsIndex = Long.valueOf(0);
-    }
 
-    public void getInitialDatas() {
-        String url = "https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/DA+Java+EN/P5+/data.json";
-        String dataJSON = this.restTemplate.getForObject(url, String.class);
-        ObjectMapper mapper = new ObjectMapper();
-        log.info("FETCHED INITIAL DATAS : " + dataJSON);
-        try {
-            JsonNode actualObj = mapper.readTree(dataJSON);
-            JsonNode medRecordsNode = actualObj.get("medicalRecords");
-            log.info("FETCHED INITIAL MEDICAL RECORDS : " + medRecordsNode);
-
-        } catch (Throwable e) {
-            log.error("Error during the initilization of datas : " + e);
-            throw new RuntimeException("Error during the initilization of datas", e);
-        }
+    public LiveDatas() {
+        this.medicalRecordsIndex = 0L;
+        this.personsIndex = 0L;
+        this.firestationsIndex = 0L;
+        this.persons = new HashMap<>();
+        this.firestations = new HashMap<>();
+        this.medicalRecords = new HashMap<>();
     }
 
     public Map<Long, MedicalRecords> getAllMedicalRecords() {

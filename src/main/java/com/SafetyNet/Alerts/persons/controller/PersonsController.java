@@ -16,7 +16,7 @@ public interface PersonsController {
 
 	ResponseEntity<PersonsDTO> createPersons(@RequestBody PersonsDTO dto);
 
-	ResponseEntity<PersonsDTO> updatePersons(@PathVariable Long id, @RequestBody PersonsDTO dto);
+	ResponseEntity<PersonsDTO> updatePersons(@RequestBody PersonsDTO dto);
 
 	ResponseEntity<String> deletePersons(@PathVariable Long id);
 }

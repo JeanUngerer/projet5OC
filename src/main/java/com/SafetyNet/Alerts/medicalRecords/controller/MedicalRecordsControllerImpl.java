@@ -34,7 +34,7 @@ public class MedicalRecordsControllerImpl implements MedicalRecordsController {
 	@Autowired
 	private MedicalRecordsService medicalRecordsService;
 
-	private ModelMapper modelMapper;
+	private ModelMapper modelMapper = new ModelMapper();
 
 
 	@GetMapping("/medicalrecords/{id}")
@@ -53,27 +53,18 @@ public class MedicalRecordsControllerImpl implements MedicalRecordsController {
 	}
 
 	@PostMapping(path = "/medicalrecords", consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<MedicalRecordsDTO> createMedicalRecords(@RequestBody MedicalRecordsDTO dto) {
 		MedicalRecords record = medicalRecordsService.createMedicalRecords(
-				dto.getFirstName(),
-				dto.getLastName(),
-				dto.getBirthdate(),
-				dto.getMedications()
+				modelMapper.map(dto, MedicalRecords.class)
 		);
 
 		return ResponseEntity.ok().body(modelMapper.map(record, MedicalRecordsDTO.class));
 	}
 
 	@PutMapping(path = "/medicalrecords/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<MedicalRecordsDTO> updateMedicalRecords(@PathVariable Long id, @RequestBody MedicalRecordsDTO dto) {
 		MedicalRecords record = medicalRecordsService.updateMedicalRecords(
-				id,
-				dto.getFirstName(),
-				dto.getLastName(),
-				dto.getBirthdate(),
-				dto.getMedications()
+				modelMapper.map(dto, MedicalRecords.class)
 		);
 
 		return ResponseEntity.ok().body(modelMapper.map(record, MedicalRecordsDTO.class));

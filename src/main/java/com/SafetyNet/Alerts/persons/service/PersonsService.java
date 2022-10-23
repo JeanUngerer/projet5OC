@@ -9,11 +9,13 @@ import java.util.List;
 public interface PersonsService {
     public Persons getPersonById(long id) throws Exception;
 
+    public Persons getPersonByName(String firstName, String lastName) throws Exception;
+
     public List<Persons> getAllPersons() throws Exception;
 
-    public Persons createPerson(String firstName, String lastName, String address, String city, String phone, String email);
+    public Persons createPerson(Persons person);
 
-    public Persons updatePerson(Long id, String firstName, String lastName, String address, String city, String phone, String email);
+    public Persons updatePerson(Persons updatePerson);
 
     public Persons deletePerson(Long id);
 }
