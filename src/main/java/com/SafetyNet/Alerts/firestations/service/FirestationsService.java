@@ -13,6 +13,10 @@ public interface FirestationsService {
 
     public List<Firestations> getAllFirestations() throws Exception;
 
+    public List<Firestations> getFirestationsByNumber(Long number);
+
+    public Firestations getFirestationByAddress(String address);
+
     public Firestations createFirestation(Firestations firestation);
 
     public Firestations updateFirestation(Firestations updateFirestation);

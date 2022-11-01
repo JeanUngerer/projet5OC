@@ -30,12 +30,16 @@ public class PersonsServiceImpl implements PersonsService {
     {
         List<Persons> allPersons = new ArrayList<Persons>(liveDatas.getAllPersons().values());
 
-        return getNameFilteredList(allPersons, firstName, lastName);
+        return getNameFilteredPerson(allPersons, firstName, lastName);
     }
 
     @Override
     public List<Persons> getAllPersons() {
         return new ArrayList<Persons>(liveDatas.getAllPersons().values());
+    }
+
+    public List<Persons> getAllPersonsAtAddress(String address) throws Exception{
+        return null;
     }
 
 
@@ -65,8 +69,12 @@ public class PersonsServiceImpl implements PersonsService {
     }
 
 
-    private Persons getNameFilteredList(List<Persons> entryList, String firstName, String lastName) {
-        return entryList.stream().filter(f -> firstName.compareTo(f.getFirstName()) > 0).filter(f -> lastName.compareTo(f.getLastName()) > 0).collect(Collectors.toList()).get(0);
+    private Persons getNameFilteredPerson(List<Persons> entryList, String firstName, String lastName) {
+        List<Persons> personsFound = entryList.stream().filter(f -> firstName.equals(f.getFirstName())).filter(f -> lastName.equals(f.getLastName())).collect(Collectors.toList());
+        if (personsFound.size() > 0) {
+            return personsFound.get(0);
+        }
+        return null;
     }
 
 

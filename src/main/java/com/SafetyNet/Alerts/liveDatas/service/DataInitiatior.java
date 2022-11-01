@@ -3,6 +3,7 @@ package com.SafetyNet.Alerts.liveDatas.service;
 import com.SafetyNet.Alerts.constants.DataUrls;
 import com.SafetyNet.Alerts.firestations.service.FirestationsService;
 import com.SafetyNet.Alerts.firestations.service.domain.Firestations;
+import com.SafetyNet.Alerts.mappers.MedicalRecordsMapper;
 import com.SafetyNet.Alerts.medicalRecords.service.MedicalRecordsService;
 import com.SafetyNet.Alerts.medicalRecords.service.domain.MedicalRecords;
 import com.SafetyNet.Alerts.persons.service.PersonsService;
@@ -50,7 +51,6 @@ public class DataInitiatior {
     private ModelMapper modelMapper = new ModelMapper();
 
     DataInitiatior(){
-        //getInitialDatas();
     }
 
     @Autowired
@@ -81,9 +81,6 @@ public class DataInitiatior {
             ObjectReader listReader = objectMapper.readerFor(new TypeReference<List<String>>() {
             });
 
-
-
-
             JSONArray personsArray = dataJSON.getJSONArray("persons");
             JSONArray medicalRecordsArray = dataJSON.getJSONArray("medicalrecords");
             JSONArray firestationsArray = dataJSON.getJSONArray("firestations");
@@ -97,7 +94,6 @@ public class DataInitiatior {
                 }
             });
 
-
             firestationsArray.forEach(json -> {
                 try {
                     firestationsService.createFirestation(objectMapper.readValue(json.toString(), Firestations.class));
@@ -108,18 +104,8 @@ public class DataInitiatior {
 
             medicalRecordsArray.forEach(json -> {
                 try {
-                    JsonNode jsonNode = objectMapper.readTree(json.toString());
 
-                    MedicalRecordNoMedicalInfo medicalRecordNoMedicalInfo = objectMapper.readValue(json.toString(), MedicalRecordNoMedicalInfo.class);
-                    MedicalRecords medicalRecords = new MedicalRecords();
-
-
-                    medicalRecords.setMedications(listReader.readValue(jsonNode.get("medications")));
-                    medicalRecords.setBirthdate(convertStringToZonedDateTime(medicalRecordNoMedicalInfo.getBirthdate()));
-                    medicalRecords.setLastName(medicalRecordNoMedicalInfo.getLastName());
-                    medicalRecords.setFirstName(medicalRecordNoMedicalInfo.getFirstName());
-                    medicalRecords.setAllergies(listReader.readValue(jsonNode.get("allergies")));
-
+                    MedicalRecords medicalRecords = objectMapper.readerFor(MedicalRecords.class).readValue(json.toString());
                     medicalRecordsService.createMedicalRecords(medicalRecords);
 
                 } catch (JsonProcessingException e) {
@@ -146,24 +132,5 @@ public class DataInitiatior {
     }
 }
 
-@Getter
-@Setter
-class MedicalRecordNoMedicalInfo {
 
-    private String firstName;
-
-    private String lastName;
-
-    private String birthdate;
-
-
-    private JsonNode medications;
-
-    @JsonIgnore
-    private String[] allergies;
-
-
-
-
-}
 

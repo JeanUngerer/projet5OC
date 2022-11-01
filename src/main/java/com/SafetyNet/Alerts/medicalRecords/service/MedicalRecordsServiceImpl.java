@@ -70,7 +70,11 @@ public class MedicalRecordsServiceImpl implements MedicalRecordsService {
 	}
 
 	private MedicalRecords getNameFilteredList(List<MedicalRecords> entryList, String firstName, String lastName) {
-		return entryList.stream().filter(f -> firstName.compareTo(f.getFirstName()) > 0).filter(f -> lastName.compareTo(f.getLastName()) > 0).collect(Collectors.toList()).get(0);
+		List<MedicalRecords> medicalRecordsFound = entryList.stream().filter(f -> lastName.equals(f.getLastName())).filter(f -> firstName.equals(f.getFirstName())).collect(Collectors.toList());
+		if (medicalRecordsFound.size() > 0) {
+			return medicalRecordsFound.get(0);
+		}
+		return null;
 	}
 
 }

@@ -10,6 +10,7 @@ import com.SafetyNet.Alerts.persons.service.domain.Persons;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -19,6 +20,7 @@ import com.SafetyNet.Alerts.medicalRecords.service.domain.MedicalRecords;
 
 @Getter
 @Setter
+@ToString
 @Service
 @Slf4j
 public class LiveDatas {
@@ -104,6 +106,15 @@ public class LiveDatas {
 
     public Firestations getFirestationById(Long id){
         return this.firestations.get(id);
+    }
+
+    public Firestations getFirestationByAddress(String address){
+        final Firestations[] firestation = new Firestations[1];
+        this.firestations.values().forEach(f -> {if (f.getAddress().equals(address)) {
+        firestation[0] = f;}
+        });
+
+        return  firestation[0];
     }
 
     public void putFirestation(Long id, Firestations record){
