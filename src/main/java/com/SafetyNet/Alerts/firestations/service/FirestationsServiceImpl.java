@@ -16,12 +16,13 @@ import java.util.stream.Collectors;
 @Service
 public class FirestationsServiceImpl implements FirestationsService{
 
-    private final LiveDatas liveDatas;
-
     @Autowired
-    public FirestationsServiceImpl(LiveDatas liveDatas){
+    private LiveDatas liveDatas;
+
+    //@Autowired
+    /*public FirestationsServiceImpl(LiveDatas liveDatas){
         this.liveDatas = liveDatas;
-    }
+    }*/
 
     @Override
     public Firestations getFirestationById(long id)

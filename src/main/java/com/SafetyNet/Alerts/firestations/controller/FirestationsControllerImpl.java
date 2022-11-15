@@ -70,7 +70,7 @@ public class FirestationsControllerImpl {
 
     @DeleteMapping("/firestations/{id}")
     public ResponseEntity<String> deleteFirestations(@PathVariable Long id) {
-        Firestations removed = firestationsService.deleteFirestation(id);
+        firestationsService.deleteFirestation(id);
         return new ResponseEntity<>("Station deleted", HttpStatus.OK);
     }
 }

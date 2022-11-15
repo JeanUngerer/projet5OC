@@ -78,8 +78,6 @@ public class DataInitiatior {
             ObjectMapper objectMapper = JsonMapper.builder()
                     .addModule(new JavaTimeModule())
                     .build();
-            ObjectReader listReader = objectMapper.readerFor(new TypeReference<List<String>>() {
-            });
 
             JSONArray personsArray = dataJSON.getJSONArray("persons");
             JSONArray medicalRecordsArray = dataJSON.getJSONArray("medicalrecords");

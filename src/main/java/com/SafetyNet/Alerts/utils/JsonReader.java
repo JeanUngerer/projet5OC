@@ -47,31 +47,4 @@ public class JsonReader {
         }
     }
 
-    public static void main(String[] args) throws IOException, JSONException {
-        JSONObject json = readJsonFromUrl(DataUrls.INITIAL_URL);
-        //System.out.println(json.toString());
-        //System.out.println(json.get("persons"));
-        JSONArray jsonArray = json.getJSONArray("persons");
-        jsonArray.length(); // see stream and lambda functions ->
-        System.out.println(jsonArray.get(0));
-        Runnable run = ( ) -> System.out.println();
-
-        jsonArray.forEach(System.out::println);
-        //jsonArray.forEach(e -> JSONObject(e).get("city"));
-
-        //jsonArray.stream().
-
-        //List list = (List) jsonArray.stream().map(jsonVar -> jsonVar.toString()).collect(Collectors.toList());
-
-        ArrayList<Object> array = new ArrayList<>();
-        jsonArray.forEach(array::add);
-        System.out.println(jsonArray);
-        //array.stream().map(var -> var.toString()).forEach();
-
-        System.out.println("========================================================");
-        System.out.println("========================================================");
-        jsonArray.forEach(jsonElem -> System.out.println(modelMapper.map(jsonElem, Persons.class)));
-
-    }
-
 }

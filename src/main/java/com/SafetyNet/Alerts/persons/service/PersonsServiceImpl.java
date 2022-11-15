@@ -14,14 +14,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class PersonsServiceImpl implements PersonsService {
-
-    private final LiveDatas liveDatas;
-
     @Autowired
+    private LiveDatas liveDatas;
+
+    /*@Autowired
     public PersonsServiceImpl(LiveDatas liveDatas){
         this.liveDatas = liveDatas;
 
-    }
+    }*/
 
     @Override
     public Persons getPersonById(long id)
