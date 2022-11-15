@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.SafetyNet.Alerts.constants.SafetyNetsErrorMessages;
+import com.SafetyNet.Alerts.errorsType.ExceptionHandler;
 import com.SafetyNet.Alerts.liveDatas.service.LiveDatas;
 import com.SafetyNet.Alerts.persons.service.domain.Persons;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,43 +23,68 @@ public class MedicalRecordsServiceImpl implements MedicalRecordsService {
 
 	@Autowired
 	public MedicalRecordsServiceImpl(LiveDatas liveDatas){
-		this.liveDatas = liveDatas;
+			this.liveDatas = liveDatas;
 	}
 	
 	@Override
 	public MedicalRecords getMedicalRecordsById(long id)
 	{
-		return liveDatas.getMedicalRecordById(id);
+
+		try {
+			return liveDatas.getMedicalRecordById(id);
+		} catch (Exception e){
+			throw new ExceptionHandler(SafetyNetsErrorMessages.NOT_FOUND, e);
+		}
 	}
 
 	public MedicalRecords getMedicalRecordByName(String firstName, String lastName)
 	{
-		List<MedicalRecords> allRecords = new ArrayList<MedicalRecords>(liveDatas.getAllMedicalRecords().values());
 
-		return getNameFilteredList(allRecords, firstName, lastName);
+		try {
+			List<MedicalRecords> allRecords = new ArrayList<MedicalRecords>(liveDatas.getAllMedicalRecords().values());
+
+			return getNameFilteredList(allRecords, firstName, lastName);
+		} catch (Exception e){
+			throw new ExceptionHandler(SafetyNetsErrorMessages.NOT_FOUND, e);
+		}
 	}
 
 	@Override
 	public List<MedicalRecords> getAllMedicalRecords() {
-		return new ArrayList<>(liveDatas.getAllMedicalRecords().values());
+
+		try {
+			return new ArrayList<>(liveDatas.getAllMedicalRecords().values());
+		} catch (Exception e){
+			throw new ExceptionHandler(SafetyNetsErrorMessages.NOT_FOUND, e);
+		}
 	}
 	
 
 	
 	@Override
 	public MedicalRecords deleteMedicalRecord(Long id) {
-		MedicalRecords removed = liveDatas.getMedicalRecordById(id);
-		liveDatas.removeMedicalRecord(id);
-		return removed;
+
+		try {
+			MedicalRecords removed = liveDatas.getMedicalRecordById(id);
+			liveDatas.removeMedicalRecord(id);
+			return removed;
+		} catch (Exception e){
+			throw new ExceptionHandler(SafetyNetsErrorMessages.NO_DELETE, e);
+		}
 	}
 	
 	@Override
 	public MedicalRecords createMedicalRecords(MedicalRecords record) {
-		Long index = liveDatas.getMedicalRecordsIndex() + 1;
-		liveDatas.setMedicalRecordsIndex(index);
-		record.setId(index);
-		liveDatas.putMedicalRecord(index, record);
-		return record;
+
+		try {
+			Long index = liveDatas.getMedicalRecordsIndex() + 1;
+			liveDatas.setMedicalRecordsIndex(index);
+			record.setId(index);
+			liveDatas.putMedicalRecord(index, record);
+			return record;
+		} catch (Exception e){
+			throw new ExceptionHandler(SafetyNetsErrorMessages.NO_CREATION, e);
+		}
 		
 	}
 	
@@ -65,8 +92,13 @@ public class MedicalRecordsServiceImpl implements MedicalRecordsService {
 	public MedicalRecords updateMedicalRecords(MedicalRecords updatedMedicalRecord) {
 
 
-		liveDatas.putMedicalRecord(updatedMedicalRecord.getId(), updatedMedicalRecord);
-		return updatedMedicalRecord;
+
+		try {
+			liveDatas.putMedicalRecord(updatedMedicalRecord.getId(), updatedMedicalRecord);
+			return updatedMedicalRecord;
+		} catch (Exception e){
+			throw new ExceptionHandler(SafetyNetsErrorMessages.NO_UPDATE, e);
+		}
 	}
 
 	private MedicalRecords getNameFilteredList(List<MedicalRecords> entryList, String firstName, String lastName) {

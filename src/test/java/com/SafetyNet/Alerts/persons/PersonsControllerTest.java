@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -47,5 +48,47 @@ public class PersonsControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1));
+    }
+
+
+    @Test
+    public void createPersonAPI() throws Exception
+    {
+        String requestJson = "{ \"firstName\":\"mee\", \"lastName\":\"tooo\", \"address\":\"1509 Culver St\", \"city\":\"Culver\", \"zip\":\"97451\", \"phone\":\"841-874-6512\", \"email\":\"mtooo@email.com\" }";
+
+        mockMvc.perform( MockMvcRequestBuilders
+                        .post("/persons")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("24")));
+
+
+    }
+/*
+    @Test
+    public void updatePersonAPI() throws Exception
+    {
+        String requestJson = "{ \"firstName\":\"John2\", \"lastName\":\"Boyd\", \"address\":\"1509 Culver St\", \"city\":\"Culver\", \"zip\":\"97451\", \"phone\":\"841-874-6512\", \"email\":\"jaboyd@email.com\" }";
+
+        mockMvc.perform( MockMvcRequestBuilders
+                        .put("/persons/{id}", 1)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("John2")));
+    }*/
+
+    @Test
+    public void deletePersonAPI() throws Exception
+    {
+        mockMvc.perform( MockMvcRequestBuilders
+                        .get("/persons/{id}", 1)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("1")));
     }
 }

@@ -3,7 +3,7 @@ package com.SafetyNet.Alerts.liveDatas.service;
 import com.SafetyNet.Alerts.constants.DataUrls;
 import com.SafetyNet.Alerts.firestations.service.FirestationsService;
 import com.SafetyNet.Alerts.firestations.service.domain.Firestations;
-import com.SafetyNet.Alerts.mappers.MedicalRecordsMapper;
+
 import com.SafetyNet.Alerts.medicalRecords.service.MedicalRecordsService;
 import com.SafetyNet.Alerts.medicalRecords.service.domain.MedicalRecords;
 import com.SafetyNet.Alerts.persons.service.PersonsService;
