@@ -12,6 +12,7 @@ import com.SafetyNet.Alerts.utils.AddressesOccupants;
 import com.SafetyNet.Alerts.utils.FullNameAge;
 import com.SafetyNet.Alerts.utils.PersonDetails;
 import com.SafetyNet.Alerts.utils.PersonsDetailsWithMail;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ import static com.SafetyNet.Alerts.constants.FixedPeriods.periodOfAdultYears;
 import static java.time.Duration.between;
 
 @Service
+@Slf4j
 public class SpecificsEndpointsServiceImpl implements SpecificsEndpointsService {
 
 
@@ -103,11 +105,12 @@ public class SpecificsEndpointsServiceImpl implements SpecificsEndpointsService 
 
             return children;
         } catch (Exception e){
+            log.error("error computing Children class instance");
             throw new ExceptionHandler(SafetyNetsErrorMessages.NOT_FOUND, e);
         }
     }
 
-    private List<FullNameAge> getChildrenAtAddress(String address) throws Exception {
+    private List<FullNameAge> getAdultsAtAddress(String address) throws Exception {
 
 
         try {
@@ -123,26 +126,34 @@ public class SpecificsEndpointsServiceImpl implements SpecificsEndpointsService 
 
             return adultsList;
         } catch (Exception e){
+            log.error("error computing adults at address");
             throw new ExceptionHandler(SafetyNetsErrorMessages.NOT_FOUND, e);
         }
     }
 
-    private List<FullNameAge> getAdultsAtAddress(String address) throws Exception {
+    private List<FullNameAge> getChildrenAtAddress(String address) throws Exception {
 
 
         try {
+
+            log.info("Before all childAlert in service");
             List<Persons> childrenAtAddress =  personsService.getAllPersons().stream().filter(f -> f.getAddress().equals(address)).filter(
                             f -> !isAdult(medicalRecordsService
                                     .getMedicalRecordByName(f.getFirstName(), f.getLastName()).getBirthdate().toLocalDate()))
                     .collect(Collectors.toList());
+            log.info("ListPersons PASSED");
 
             List<FullNameAge> childrenList = new ArrayList<>();
+
+            log.info("new arrayList PASSED");
 
             childrenAtAddress.forEach(p -> childrenList.add(new FullNameAge(p.getFirstName(), p.getLastName(), computeAge(medicalRecordsService
                     .getMedicalRecordByName(p.getFirstName(), p.getLastName()).getBirthdate().toLocalDate()))));
 
+            log.debug("list add PASSED");
             return childrenList;
         } catch (Exception e){
+            log.error("error computing children at address");
             throw new ExceptionHandler(SafetyNetsErrorMessages.NOT_FOUND, e);
         }
     }
@@ -294,13 +305,24 @@ public class SpecificsEndpointsServiceImpl implements SpecificsEndpointsService 
     }
 
     private boolean isAdult (LocalDate birthdate) {
-        return Period.between(birthdate , ZonedDateTime.now().toLocalDate())
-                .getYears() >= periodOfAdultYears.getYears();
+        try {
+            log.info("IS ADULT");
+            return Period.between(birthdate, ZonedDateTime.now().toLocalDate())
+                    .getYears() >= periodOfAdultYears.getYears();
+        } catch (Exception e){
+            log.error("error computing is adults");
+            throw new ExceptionHandler("Cannot compute isAdult //", e);
+        }
     }
 
     private int computeAge (LocalDate birthdate){
-        return Period.between(birthdate , ZonedDateTime.now().toLocalDate())
-                .getYears();
+        try {
+            return Period.between(birthdate, ZonedDateTime.now().toLocalDate())
+                    .getYears();
+        } catch (Exception e){
+            log.error("error computing age");
+            throw new ExceptionHandler("Cannot compute age from : " + birthdate.toString() + "//", e);
+        }
     }
 
 }

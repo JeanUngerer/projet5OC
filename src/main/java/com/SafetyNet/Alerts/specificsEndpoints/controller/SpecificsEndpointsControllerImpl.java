@@ -37,6 +37,7 @@ public class SpecificsEndpointsControllerImpl {
     public ResponseEntity<ChildrenDTO> getChildrenAtAddress(@RequestParam String address) throws Exception {
         address = address.replace("+", " ");
         ChildrenDTO dto = modelMapper.map(specificsEndpointsService.getChildrenAndAdultsAtAddress(address), ChildrenDTO.class);
+        log.info("USED : /childAlert" + dto);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 

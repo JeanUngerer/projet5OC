@@ -4,6 +4,7 @@ import com.SafetyNet.Alerts.constants.SafetyNetsErrorMessages;
 import com.SafetyNet.Alerts.errorsType.ExceptionHandler;
 import com.SafetyNet.Alerts.liveDatas.service.LiveDatas;
 import com.SafetyNet.Alerts.persons.service.domain.Persons;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class PersonsServiceImpl implements PersonsService {
     @Autowired
@@ -50,8 +52,10 @@ public class PersonsServiceImpl implements PersonsService {
     public List<Persons> getAllPersons() {
 
         try {
+            log.info("GET ALL PERSONS");
             return new ArrayList<Persons>(liveDatas.getAllPersons().values());
         } catch (Exception e){
+            log.error("error computing all persons");
             throw new ExceptionHandler(SafetyNetsErrorMessages.NOT_FOUND, e);
         }
     }

@@ -9,6 +9,7 @@ import com.SafetyNet.Alerts.constants.SafetyNetsErrorMessages;
 import com.SafetyNet.Alerts.errorsType.ExceptionHandler;
 import com.SafetyNet.Alerts.liveDatas.service.LiveDatas;
 import com.SafetyNet.Alerts.persons.service.domain.Persons;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import com.SafetyNet.Alerts.medicalRecords.service.domain.MedicalRecords;
 
 
 @Service
+@Slf4j
 public class MedicalRecordsServiceImpl implements MedicalRecordsService {
 	@Autowired
 	private LiveDatas liveDatas;
@@ -41,10 +43,12 @@ public class MedicalRecordsServiceImpl implements MedicalRecordsService {
 	{
 
 		try {
+			log.info("GET MED RECORD BY NAME");
 			List<MedicalRecords> allRecords = new ArrayList<MedicalRecords>(liveDatas.getAllMedicalRecords().values());
 
 			return getNameFilteredList(allRecords, firstName, lastName);
 		} catch (Exception e){
+			log.error("error computing medical record by name");
 			throw new ExceptionHandler(SafetyNetsErrorMessages.NOT_FOUND, e);
 		}
 	}
