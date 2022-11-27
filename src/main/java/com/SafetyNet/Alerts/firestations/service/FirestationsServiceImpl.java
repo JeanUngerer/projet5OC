@@ -19,11 +19,6 @@ public class FirestationsServiceImpl implements FirestationsService{
     @Autowired
     private LiveDatas liveDatas;
 
-    //@Autowired
-    /*public FirestationsServiceImpl(LiveDatas liveDatas){
-        this.liveDatas = liveDatas;
-    }*/
-
     @Override
     public Firestations getFirestationById(long id)
     {

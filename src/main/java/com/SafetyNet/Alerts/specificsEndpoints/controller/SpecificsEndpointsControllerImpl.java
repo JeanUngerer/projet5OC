@@ -29,7 +29,8 @@ public class SpecificsEndpointsControllerImpl {
 
     @GetMapping("/phoneAlert")
     public ResponseEntity<PhonesCoveredDTO> getAllCoveredPhones(@RequestParam Long firestation) throws Exception{
-        PhonesCoveredDTO dto = modelMapper.map(specificsEndpointsService.getAllCoveredPhones(firestation), PhonesCoveredDTO.class);
+        PhonesCoveredDTO dto = modelMapper
+                .map(specificsEndpointsService.getAllCoveredPhones(firestation), PhonesCoveredDTO.class);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 

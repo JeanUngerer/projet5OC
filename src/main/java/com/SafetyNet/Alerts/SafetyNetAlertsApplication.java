@@ -9,14 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SafetyNetAlertsApplication {
 
-	/*
-	static DataInitiatior dataInitiatior;
-
-	@Autowired
-	public SafetyNetAlertsApplication(DataInitiatior dataInitiatior){
-		this.dataInitiatior = dataInitiatior;
-	}
-	*/
 	public static void main(String[] args) {
 
 		SpringApplication.run(SafetyNetAlertsApplication.class, args);

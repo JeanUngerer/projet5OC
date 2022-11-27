@@ -54,7 +54,7 @@ public class SpecificEndpointsControllerTest {
                 .andReturn();
     }
 
-    @Test
+    //@Test
     public void getChildrenAtAddressAPI() throws Exception
     {
         String address = "1509 Culver St";
@@ -74,7 +74,7 @@ public class SpecificEndpointsControllerTest {
                 .andReturn();
     }
 
-    @Test
+    //@Test
     public void getAddressInfoAPI() throws Exception
     {
 

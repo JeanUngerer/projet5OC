@@ -75,18 +75,15 @@ public class SpecificsEndpointsServiceImpl implements SpecificsEndpointsService 
     }
 
     public PhonesCovered getAllCoveredPhones(long stationNumber) throws Exception {
-
-
         try {
             List<Firestations> firestationAddresses = firestationsService.getFirestationsByNumber(stationNumber);
 
             PhonesCovered phonesCovered = new PhonesCovered();
 
-            phonesCovered.setPhonesNumbers(personsService.getAllPersons().stream().filter(f -> isCovered(f.getAddress(), firestationAddresses))
+            phonesCovered.setPhonesNumbers(personsService.getAllPersons().stream()
+                    .filter(f -> isCovered(f.getAddress(), firestationAddresses))
                     .map(persons -> persons.getPhone())
                     .collect(Collectors.toSet()).stream().toList());
-
-
             return phonesCovered;
         } catch (Exception e){
             throw new ExceptionHandler(SafetyNetsErrorMessages.NOT_FOUND, e);
