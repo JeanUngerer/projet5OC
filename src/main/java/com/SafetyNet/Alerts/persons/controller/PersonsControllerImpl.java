@@ -38,6 +38,7 @@ public class PersonsControllerImpl implements PersonsController {
 	@GetMapping("/persons/{id}")
 	public ResponseEntity<PersonsDTO> getPersonsById(@PathVariable Long id) throws Exception {
 		Persons record = personsService.getPersonById(id);
+		log.info("USED Get : /persons/" + id);
 		return new ResponseEntity<>(modelMapper.map(record, PersonsDTO.class), HttpStatus.OK);
 
 	}
@@ -46,8 +47,8 @@ public class PersonsControllerImpl implements PersonsController {
 	public ResponseEntity<List<PersonsDTO>> getAllPersons() throws Exception {
 		List<Persons> records = personsService.getAllPersons();
 		List<PersonsDTO> result = Arrays.asList(modelMapper.map(records, PersonsDTO[].class));
+		log.info("USED Get : /persons");
 		return new ResponseEntity<>(result, HttpStatus.OK);
-
 	}
 
 	@PostMapping(path = "/persons", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -55,7 +56,7 @@ public class PersonsControllerImpl implements PersonsController {
 		Persons record = personsService.createPerson(
 				modelMapper.map(dto, Persons.class)
 		);
-
+		log.info("USED Post : /persons");
 		return ResponseEntity.ok().body(modelMapper.map(record, PersonsDTO.class));
 	}
 
@@ -64,13 +65,14 @@ public class PersonsControllerImpl implements PersonsController {
 		Persons record = personsService.updatePerson(
 				modelMapper.map(dto, Persons.class)
 		);
-
+		log.info("USED Put : /persons/" + dto);
 		return ResponseEntity.ok().body(modelMapper.map(record, PersonsDTO.class));
 	}
 
 	@DeleteMapping("/persons/{id}")
 	public ResponseEntity<String> deletePersons(@PathVariable Long id) {
 		Persons removed = personsService.deletePerson(id);
+		log.info("USED Delete : /persons/" + id);
 		return new ResponseEntity<>("The person entry for " + removed.getFirstName() + " " + removed.getLastName() +  " has been deleted", HttpStatus.OK);
 	}
 

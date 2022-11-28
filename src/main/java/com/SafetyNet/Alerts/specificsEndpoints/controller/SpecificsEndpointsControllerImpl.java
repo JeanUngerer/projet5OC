@@ -24,6 +24,7 @@ public class SpecificsEndpointsControllerImpl {
     public ResponseEntity<StationPersonsCoverageDTO> getAllCoveredPersons(@RequestParam Long stationNumber) throws Exception {
 
         StationPersonsCoverageDTO dto = modelMapper.map(specificsEndpointsService.getAllCoveredPersons(stationNumber), StationPersonsCoverageDTO.class);
+        log.info("USED : /firestation" + dto);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
@@ -31,6 +32,7 @@ public class SpecificsEndpointsControllerImpl {
     public ResponseEntity<PhonesCoveredDTO> getAllCoveredPhones(@RequestParam Long firestation) throws Exception{
         PhonesCoveredDTO dto = modelMapper
                 .map(specificsEndpointsService.getAllCoveredPhones(firestation), PhonesCoveredDTO.class);
+        log.info("USED : /phoneAlert" + dto);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
@@ -46,12 +48,14 @@ public class SpecificsEndpointsControllerImpl {
     ResponseEntity<AddressInfoDTO> getAddressInfo(@RequestParam String address) throws Exception {
         address = address.replace("+", " ");
         AddressInfoDTO dto = modelMapper.map(specificsEndpointsService.getAddressInfo(address), AddressInfoDTO.class);
+        log.info("USED : /fire" + dto);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @GetMapping("/flood/stations")
     ResponseEntity<AddressesServicedDTO> getServicedAddressesInfo(@RequestParam Long stations) throws Exception{
         AddressesServicedDTO dto = modelMapper.map(specificsEndpointsService.getServicedAddressesInfo(stations), AddressesServicedDTO.class);
+        log.info("USED : /flood/stations" + dto);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
@@ -60,12 +64,14 @@ public class SpecificsEndpointsControllerImpl {
         firstName = firstName.replace("+", " ");
         lastName = lastName.replace("+", " ");
         PersonsDetailsByNameAgeDTO dto = modelMapper.map(specificsEndpointsService.getPersonsDetailsByNameAge(firstName, lastName), PersonsDetailsByNameAgeDTO.class);
+        log.info("USED : /personInfo" + dto);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @GetMapping("/communityEmail")
     ResponseEntity<AllMailsDTO> getAllMails() throws Exception{
         AllMailsDTO dto = modelMapper.map(specificsEndpointsService.getAllMails(), AllMailsDTO.class);
+        log.info("USED : /communityEmail" + dto);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
