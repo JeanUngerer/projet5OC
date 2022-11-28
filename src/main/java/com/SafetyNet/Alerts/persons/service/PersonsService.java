@@ -11,8 +11,6 @@ public interface PersonsService {
 
     public Persons getPersonByName(String firstName, String lastName) throws Exception;
 
-    public List<Persons> getAllPersonsAtAddress(String address) throws Exception;
-
     public List<Persons> getAllPersons() throws Exception;
 
     public Persons createPerson(Persons person);

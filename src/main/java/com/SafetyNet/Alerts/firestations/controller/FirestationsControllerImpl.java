@@ -38,6 +38,7 @@ public class FirestationsControllerImpl {
     @GetMapping("/firestations/{id}")
     public ResponseEntity<FirestationsDTO> getFirestationsById(@PathVariable Long id) throws Exception {
         Firestations record = firestationsService.getFirestationById(id);
+        log.info("USED Get : /firestations/" + id);
         return new ResponseEntity<>(modelMapper.map(record, FirestationsDTO.class), HttpStatus.OK);
 
     }
@@ -46,6 +47,7 @@ public class FirestationsControllerImpl {
     public ResponseEntity<List<FirestationsDTO>> getAllFirestations() throws Exception {
         List<Firestations> records = firestationsService.getAllFirestations();
         List<FirestationsDTO> result = Arrays.asList(modelMapper.map(records, FirestationsDTO[].class));
+        log.info("USED Get : /firestations");
         return new ResponseEntity<>(result, HttpStatus.OK);
 
     }
@@ -55,22 +57,23 @@ public class FirestationsControllerImpl {
         Firestations record = firestationsService.createFirestation(
                 modelMapper.map(dto, Firestations.class)
         );
-
+        log.info("USED Post : /firestations");
         return ResponseEntity.ok().body(modelMapper.map(record, FirestationsDTO.class));
     }
 
     @PutMapping(path = "/firestations/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PersonsDTO> updateFirestations(@RequestBody PersonsDTO dto) {
+    public ResponseEntity<FirestationsDTO> updateFirestations(@RequestBody FirestationsDTO dto) {
         Firestations record = firestationsService.updateFirestation(
                 modelMapper.map(dto, Firestations.class)
         );
-
-        return ResponseEntity.ok().body(modelMapper.map(record, PersonsDTO.class));
+        log.info("USED Put : /firestations/" + dto);
+        return ResponseEntity.ok().body(modelMapper.map(record, FirestationsDTO.class));
     }
 
     @DeleteMapping("/firestations/{id}")
     public ResponseEntity<String> deleteFirestations(@PathVariable Long id) {
         firestationsService.deleteFirestation(id);
+        log.info("USED Delete : /firestations/" + id);
         return new ResponseEntity<>("Station deleted", HttpStatus.OK);
     }
 }
