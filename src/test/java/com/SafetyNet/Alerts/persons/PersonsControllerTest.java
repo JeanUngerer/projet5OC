@@ -66,11 +66,11 @@ public class PersonsControllerTest {
 
 
     }
-/*
+
     @Test
     public void updatePersonAPI() throws Exception
     {
-        String requestJson = "{ \"firstName\":\"John2\", \"lastName\":\"Boyd\", \"address\":\"1509 Culver St\", \"city\":\"Culver\", \"zip\":\"97451\", \"phone\":\"841-874-6512\", \"email\":\"jaboyd@email.com\" }";
+        String requestJson = "{\"id\":1, \"firstName\":\"John\", \"lastName\":\"Boyd\", \"address\":\"1509 Culver St\", \"city\":\"Culver\", \"zip\":\"97451\", \"phone\":\"841-874-7777\", \"email\":\"jaboyd@email.com\" }";
 
         mockMvc.perform( MockMvcRequestBuilders
                         .put("/persons/{id}", 1)
@@ -78,8 +78,8 @@ public class PersonsControllerTest {
                         .content(requestJson))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("John2")));
-    }*/
+                .andExpect(content().string(containsString("841-874-7777")));
+    }
 
     @Test
     public void deletePersonAPI() throws Exception

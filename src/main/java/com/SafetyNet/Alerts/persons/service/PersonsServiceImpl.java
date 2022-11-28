@@ -19,12 +19,6 @@ public class PersonsServiceImpl implements PersonsService {
     @Autowired
     private LiveDatas liveDatas;
 
-    /*@Autowired
-    public PersonsServiceImpl(LiveDatas liveDatas){
-        this.liveDatas = liveDatas;
-
-    }*/
-
     @Override
     public Persons getPersonById(long id)
     {
@@ -60,18 +54,6 @@ public class PersonsServiceImpl implements PersonsService {
         }
     }
 
-    public List<Persons> getAllPersonsAtAddress(String address) throws Exception{
-
-
-        try {
-            return null;
-        } catch (Exception e){
-            throw new ExceptionHandler(SafetyNetsErrorMessages.NOT_FOUND, e);
-        }
-    }
-
-
-
     @Override
     public Persons deletePerson(Long id) {
 
@@ -103,8 +85,8 @@ public class PersonsServiceImpl implements PersonsService {
     public Persons updatePerson(Persons updatePerson) {
 
         try {
+            liveDatas.putPerson(updatePerson.getId(), updatePerson);
             Persons updatedPerson = liveDatas.getPersonById(updatePerson.getId());
-            liveDatas.putPerson(updatePerson.getId(), updatedPerson);
             return updatedPerson;
         } catch (Exception e){
             throw new ExceptionHandler(SafetyNetsErrorMessages.NO_UPDATE, e);

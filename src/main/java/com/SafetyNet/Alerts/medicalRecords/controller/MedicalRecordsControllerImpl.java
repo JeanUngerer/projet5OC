@@ -40,6 +40,7 @@ public class MedicalRecordsControllerImpl implements MedicalRecordsController {
 	@GetMapping("/medicalrecords/{id}")
 	public ResponseEntity<MedicalRecordsDTO> getMedicalRecordsById(@PathVariable Long id) throws Exception {
 		MedicalRecords record = medicalRecordsService.getMedicalRecordsById(id);
+		log.info("USED Get : /medicalrecords/" + id);
 		return new ResponseEntity<>(modelMapper.map(record, MedicalRecordsDTO.class), HttpStatus.OK);
 		
 	}
@@ -48,6 +49,7 @@ public class MedicalRecordsControllerImpl implements MedicalRecordsController {
 	public ResponseEntity<List<MedicalRecordsDTO>> getAllMedicalRecords() throws Exception {
 		List<MedicalRecords> records = medicalRecordsService.getAllMedicalRecords();
 		List<MedicalRecordsDTO> result = Arrays.asList(modelMapper.map(records, MedicalRecordsDTO[].class));
+		log.info("USED Get : /medicalrecords");
 		return new ResponseEntity<>(result, HttpStatus.OK);
 
 	}
@@ -57,6 +59,7 @@ public class MedicalRecordsControllerImpl implements MedicalRecordsController {
 		MedicalRecords record = medicalRecordsService.createMedicalRecords(
 				modelMapper.map(dto, MedicalRecords.class)
 		);
+		log.info("USED Post : /medicalrecords");
 
 		return ResponseEntity.ok().body(modelMapper.map(record, MedicalRecordsDTO.class));
 	}
@@ -66,13 +69,14 @@ public class MedicalRecordsControllerImpl implements MedicalRecordsController {
 		MedicalRecords record = medicalRecordsService.updateMedicalRecords(
 				modelMapper.map(dto, MedicalRecords.class)
 		);
-
+		log.info("USED Put : /medicalrecords/" + dto);
 		return ResponseEntity.ok().body(modelMapper.map(record, MedicalRecordsDTO.class));
 	}
 
 	@DeleteMapping("/medicalrecords/{id}")
 	public ResponseEntity<String> deleteMedicalRecords(@PathVariable Long id) {
 		MedicalRecords removed = medicalRecordsService.deleteMedicalRecord(id);
+		log.info("USED Delete : /medicalrecords/" + id);
 		return new ResponseEntity<>("The medical record from " + removed.getFirstName() + " " + removed.getLastName() +  " has been deleted", HttpStatus.OK);
 	}
 

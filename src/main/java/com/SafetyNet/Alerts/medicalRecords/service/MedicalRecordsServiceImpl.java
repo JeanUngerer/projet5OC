@@ -22,11 +22,6 @@ import com.SafetyNet.Alerts.medicalRecords.service.domain.MedicalRecords;
 public class MedicalRecordsServiceImpl implements MedicalRecordsService {
 	@Autowired
 	private LiveDatas liveDatas;
-
-	/*@Autowired
-	public MedicalRecordsServiceImpl(LiveDatas liveDatas){
-			this.liveDatas = liveDatas;
-	}*/
 	
 	@Override
 	public MedicalRecords getMedicalRecordsById(long id)
